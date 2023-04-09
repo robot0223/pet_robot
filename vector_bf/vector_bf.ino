@@ -37,8 +37,8 @@ Servo serv;
 #define MOTER_B1 4
 #define MOTER_B2 5
 
-
-
+//voltage
+#define V3_3 120
 
 
 
@@ -65,14 +65,14 @@ void setup() {
   voice.setMode(VOICE_MODE_RECOGNITION);
 
   //servo
-  serv.attach(SERVO_MOTER);
+  //serv.attach(SERVO_MOTER);
 
   
   //tft lcd
-  analogWrite(TFTLED, 168);
+  analogWrite(TFTLED, V3_3);
   tft.begin();
   tft.fillScreen(ILI9340_BLACK);
-  Serial.println(closed_eye());
+  Serial.println(eye());
 }
 
 void loop() {
