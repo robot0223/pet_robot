@@ -36,14 +36,10 @@ Servo serv;
 #define MOTER_A2 3
 #define MOTER_B1 4
 #define MOTER_B2 5
-#define SERVO_MOTER 22
 
 
 
 
-
-//else
-#define BUZZER 23
 
 
 
