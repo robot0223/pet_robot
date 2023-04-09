@@ -32,10 +32,10 @@ Servo serv;
 #define TFTLED 6
 
 //moter pin
-#define MOTER_A1 2
-#define MOTER_A2 3
-#define MOTER_B1 4
-#define MOTER_B2 5
+#define MOTOR_A1 2
+#define MOTOR_A2 3
+#define MOTOR_B1 4
+#define MOTOR_B2 5
 
 //voltage
 #define V3_3 120
@@ -53,10 +53,10 @@ void setup() {
   Serial.begin(9600);
 
 
-  pinMode(MOTER_A1, OUTPUT);
-  pinMode(MOTER_B1, OUTPUT);
-  pinMode(MOTER_A2, OUTPUT);
-  pinMode(MOTER_B2, OUTPUT);
+  pinMode(MOTOR_A1, OUTPUT);
+  pinMode(MOTOR_B1, OUTPUT);
+  pinMode(MOTOR_A2, OUTPUT);
+  pinMode(MOTOR_B2, OUTPUT);
   pinMode(TFTLED, OUTPUT);
   //voice
   voice.setDebugOn(&Serial);
@@ -65,7 +65,7 @@ void setup() {
   voice.setMode(VOICE_MODE_RECOGNITION);
 
   //servo
-  //serv.attach(SERVO_MOTER);
+  //serv.attach(SERVO_MOTOR);
 
   
   //tft lcd
@@ -88,8 +88,8 @@ void loop() {
 
 int forward(int mot1speed, int mot2speed)
 {
-  analogWrite(MOTER_A1, mot1speed);
-  analogWrite(MOTER_B1, mot2speed);
+  analogWrite(MOTOR_A1, mot1speed);
+  analogWrite(MOTOR_B1, mot2speed);
 }
 
 unsigned long eye()
