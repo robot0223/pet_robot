@@ -8,7 +8,6 @@
 #include<Servo.h>
 #include <HUSKYLENS.h>
 
-
 //voice
 SoftwareSerial uart_voice(10, 11);
 Mecha_VoiceRecognition voice(&uart_voice);
@@ -72,7 +71,7 @@ void setup() {
   analogWrite(TFTLED, V3_3);
   tft.begin();
   tft.fillScreen(ILI9340_BLACK);
-  Serial.println(eye());
+  Serial.println(closed_eye());
 }
 
 void loop() {
