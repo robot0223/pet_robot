@@ -40,7 +40,19 @@
 
 
 //voltage
-#define TFT__V 120
+#define TFT_V 120
+#define V_0 0
+
+
+
+
+
+
+
+//values
+int enable_main;
+
+
 
 
 //voice
@@ -82,9 +94,10 @@ void setup() {
   //tft lcd
   pinMode(TFTLED, OUTPUT);
 
-//etcf.
-pinMode(BUZZER,OUTPUT);
-pinMode(BUTTON,INPUT);
+
+  //etcf.
+  pinMode(BUZZER, OUTPUT);
+  pinMode(BUTTON, INPUT_PULLUP);
 
   //voice
   voice.setDebugOn(&Serial);
@@ -93,23 +106,32 @@ pinMode(BUTTON,INPUT);
   voice.setMode(VOICE_MODE_RECOGNITION);
 
   //servo
-  serv.attach(SERVO);
+  serv.attach(SERVO);  //servo definition (just to remind that servo needs to be set)
+  //detach in order to conserve energy
+  serv.detach();
 
-
-  //tft lcd
-  analogWrite(TFT_LED, TFT_V);
+  //tft lcd basic use
+  /*analogWrite(TFT_LED, TFT_V);
   tft.begin();
   tft.fillScreen(ILI9340_BLACK);
   Serial.println(closed_eye());
+  */
 }
 
 void loop() {
-  
-//if button is pressed
-//turn robot into wake mode(servo on, lcd on 
-//lcd print download robot app
-//bluetooth connection with phone 
-//if connected lcd print enter code ****
+  int button_input = digitalRead(BUTTON);
+  //if button is pressed
+  if (button_input == 1) {
+    //turn robot into wake mode(servo on, lcd on)
+    robot_wake();
+
+    //lcd print download robot app
+    //bluetooth connection with phone
+    //if connected lcd print enter code ****
+    robot_start();
+    //enable main mode
+    enable_main=1;
+  }
 
 
 
@@ -151,10 +173,9 @@ void voicerecongnition_response() {
 
     switch (response) {
       case VOICE_INSTRUCTION_1:
-      Serial.println("1");
-      break;
+        Serial.println("1");
+        break;
     }
-
   }
 }
 
@@ -184,4 +205,29 @@ unsigned long closed_eye() {
   tft.fillRoundRect(55, 185, 90, 90, 30, tft.Color565(0, 0, 0));
   tft.fillRoundRect(50, 40, 90, 90, 30, tft.Color565(0, 240, 0));
   tft.fillRoundRect(50, 180, 90, 90, 30, tft.Color565(0, 240, 0));
+}
+
+
+
+//robot on->off control functions
+void robot_wake() {
+  serv.attach(SERVO);
+  analogWrite(TFT_LED, TFT_V);
+}
+
+void robot_sleep() {
+  serv.detach();
+  ananlogWrite(TFT_LED, V_0);
+}
+
+void robot_start() {
+  //lcd print download robot app
+  tft.fillScreen(ILI9340_BLACK);
+  tft.setCursor(0, 0);
+  tft.setTextColor(ILI9340_WHITE);
+  tft.setTextSize(1);
+  tft.println("DOWNLOAD PET_ROBOT APP");
+  //bluetooth connection with phone
+
+  //if connected lcd print enter code ****
 }
