@@ -44,11 +44,6 @@
 #define V_0 0
 
 
-
-
-
-
-
 //values
 int enable_main;
 
@@ -126,19 +121,15 @@ void loop() {
     robot_wake();
 
     //lcd print download robot app
-    //bluetooth connection with phone
-    //if connected lcd print enter code ****
+    //if connected lcd print connected
     robot_start();
     //enable main mode
-    enable_main=1;
+    enable_main = 1;
   }
-
-
-
-
-
-
 }
+
+
+
 
 
 
@@ -227,7 +218,12 @@ void robot_start() {
   tft.setTextColor(ILI9340_WHITE);
   tft.setTextSize(1);
   tft.println("DOWNLOAD PET_ROBOT APP");
-  //bluetooth connection with phone
-
-  //if connected lcd print enter code ****
+  //if connected lcd print connected
+  if (bluetooth.available()) {
+    tft.fillScreen(ILI9340_BLACK);
+    tft.setCursor(0, 0);
+    tft.setTextColor(ILI9340_WHITE);
+    tft.setTextSize(1);
+    tft.println("bluetooth conncetion complet.");
+  }
 }
