@@ -45,8 +45,8 @@
 
 
 //values
-int enable_main;
-
+bool enable_main = false;
+bool start_need = true;
 
 
 
@@ -65,7 +65,7 @@ Adafruit_ILI9340 tft = Adafruit_ILI9340(CS, DC, TFT_RST);
 
 //Huskeylens
 HUSKYLENS huskylens;
-SoftwareSerial mySerial(, );  // RX, TX
+SoftwareSerial mySerial(HUSKEYLENS_RX, HUSKEYLENS_TX);  // RX, TX
 
 //servo moter
 Servo serv;
@@ -77,7 +77,7 @@ SoftwareSerial bluetooth(BLUETOOTH_RX, BLUETOOTH_TX);
 void setup() {
   //Serial
   Serial.begin(9600);
-  Serial.begin(115200);
+  //Serial.begin(115200);
 
   //pin settings
   //dc motor
@@ -87,7 +87,7 @@ void setup() {
   pinMode(MOTOR_B2, OUTPUT);
 
   //tft lcd
-  pinMode(TFTLED, OUTPUT);
+  pinMode(TFT_LED, OUTPUT);
 
 
   //etcf.
@@ -106,7 +106,8 @@ void setup() {
   serv.detach();
 
   //tft lcd basic use
-  /*analogWrite(TFT_LED, TFT_V);
+  /*
+  analogWrite(TFT_LED, TFT_V);
   tft.begin();
   tft.fillScreen(ILI9340_BLACK);
   Serial.println(closed_eye());
@@ -115,16 +116,23 @@ void setup() {
 
 void loop() {
   int button_input = digitalRead(BUTTON);
+  Serial.println(button_input);
   //if button is pressed
-  if (button_input == 1) {
+  if (button_input == 0) {
+
     //turn robot into wake mode(servo on, lcd on)
     robot_wake();
 
     //lcd print download robot app
     //if connected lcd print connected
-    robot_start();
+    if (start_need == true) {
+      Serial.println("entered start mode");
+      robot_start();
+      start_need = false;
+    }
+
     //enable main mode
-    enable_main = 1;
+    enable_main = true;
   }
 }
 
@@ -140,18 +148,18 @@ void forward(int mot1speed, int mot2speed) {
 }
 
 void backwards(int mot1speed, int mot2speed) {
-  analogWrite(MOTOR_A2);
-  analogWrite(MOTOR_B2);
+  analogWrite(MOTOR_A2, mot1speed);
+  analogWrite(MOTOR_B2, mot2speed);
 }
 
 void leftspin(int mot1speed, int mot2speed) {
-  analogWrite(MOTOR_A2);
-  analogWrite(MOTOR_B1);
+  analogWrite(MOTOR_A2, mot1speed);
+  analogWrite(MOTOR_B1, mot2speed);
 }
 
 void rightspin(int mot1speed, int mot2speed) {
-  analogWrite(MOTOR_A1);
-  analogWrite(MOTOR_B2);
+  analogWrite(MOTOR_A1, mot1speed);
+  analogWrite(MOTOR_B2, mot2speed);
 }
 
 //voice recongniton functions
@@ -208,15 +216,17 @@ void robot_wake() {
 
 void robot_sleep() {
   serv.detach();
-  ananlogWrite(TFT_LED, V_0);
+  analogWrite(TFT_LED, V_0);
 }
 
 void robot_start() {
   //lcd print download robot app
+  tft.begin();
   tft.fillScreen(ILI9340_BLACK);
   tft.setCursor(0, 0);
   tft.setTextColor(ILI9340_WHITE);
-  tft.setTextSize(1);
+  tft.setTextSize(5);
+  tft.setRotation(3);//set 
   tft.println("DOWNLOAD PET_ROBOT APP");
   //if connected lcd print connected
   if (bluetooth.available()) {
