@@ -134,6 +134,21 @@ void loop() {
     //enable main mode
     enable_main = true;
   }
+  
+  
+  //main starting
+  if(enable_main == true)
+  {
+     Serial.println("main starting.....");
+    //random movment
+    //random
+    
+    
+  } 
+    
+  
+  
+  
 }
 
 
@@ -163,17 +178,30 @@ void rightspin(int mot1speed, int mot2speed) {
 }
 
 //voice recongniton functions
-void voicerecongnition_response() {
+int  voicerecongnition_response() {
   VOICE_InstructionTypeDef response = voice.getInstruction();
   if (response == VOICE_INSTRUCTION_1 || response == VOICE_INSTRUCTION_2 || response == VOICE_INSTRUCTION_3 || response == VOICE_INSTRUCTION_4 || response == VOICE_INSTRUCTION_5) {
-
+    int voice_number;
     voice.setGroup(VOICE_GROUP_2);
     VOICE_InstructionTypeDef response = voice.getInstruction();
 
     switch (response) {
       case VOICE_INSTRUCTION_1:
-        Serial.println("1");
+        voice_number=1;
+        Serial.println(voice_number);
+        return(voice_number);
         break;
+        
+      case VOICE_INSTRUCTION_2:
+        voice_numver=2;
+        Serial.println(voice_number);
+        return(voice_number);
+        break;
+        
+        
+      default:
+        Serial.println("unknown command");
+       
     }
   }
 }
@@ -237,3 +265,4 @@ void robot_start() {
     tft.println("bluetooth conncetion complet.");
   }
 }
+  
