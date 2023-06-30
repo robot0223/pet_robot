@@ -197,6 +197,25 @@ int  voicerecongnition_response() {
         Serial.println(voice_number);
         return(voice_number);
         break;
+
+      case VOICR_INSTRUCTION_3:
+        voice_number=3;
+        Serial.println(voice_number);
+        return(voice_number);
+        break;
+
+      case VOICR_INSTRUCTION_4:
+        voice_number=4;
+        Serial.println(voice_number);
+        return(voice_number);
+        break;
+
+      case VOICR_INSTRUCTION_5:
+        voice_number=5;
+        Serial.println(voice_number);
+        return(voice_number);
+        break;
+      
         
         
       default:
@@ -235,6 +254,21 @@ unsigned long closed_eye() {
 }
 
 
+void data_Reset() {
+
+}
+
+void user_DataReset() {
+
+}
+
+void robot_DataReset() {
+
+}
+
+
+
+
 
 //robot on->off control functions
 void robot_wake() {
@@ -265,4 +299,5 @@ void robot_start() {
     tft.println("bluetooth conncetion complet.");
   }
 }
-  
+
+
